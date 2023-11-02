@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listar Usuários</title>
+</head>
+<body>
+    <h1>Listar Usuários</h1>
+
+    <!-- Botão para voltar à página inicial -->
+    <a href="/">Voltar para a Página Inicial</a>
+
+    <!-- Tabela para listar todos os usuários -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID de Usuário</th>
+                <th>Nome de Usuário</th>
+                <th>Senha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os usuários serão exibidos aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        // JavaScript para fazer a chamada AJAX e preencher a tabela com usuários
+        fetch("/api/visualizar")
+            .then(response => response.json())
+            .then(data => {
+                const userList = document.querySelector("table tbody");
+
+                data.forEach(usuario => {
+                    const row = userList.insertRow();
+                    const userIdCell = row.insertCell(0);
+                    const userNameCell = row.insertCell(1);
+                    const userPasswordCell = row.insertCell(2);
+
+                    userIdCell.textContent = usuario._id;
+                    userNameCell.textContent = usuario.usuario;
+                    userPasswordCell.textContent = usuario.senha;
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
